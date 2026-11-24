@@ -9,7 +9,8 @@ import { AppProvider } from './context/AppContext';
 
 import { WelcomePage } from './pages/WelcomePage';
 import { LoginPage } from './pages/LoginPage';
-import { ProfileCompletionPage } from './pages/ProfileCompletionPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { ProfileSetupPage } from './pages/ProfileSetupPage';
 import { TimetableSubmissionPage } from './pages/TimetableSubmissionPage';
 import { WorkspacePage } from './pages/WorkspacePage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -30,7 +31,8 @@ export default function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile/complete" element={<ProfileCompletionPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile/complete" element={<ProfileSetupPage />} />
           <Route path="/timetable/submit" element={<TimetableSubmissionPage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />

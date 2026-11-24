@@ -188,7 +188,7 @@ export const LoginPage: React.FC = () => {
             {/* Footer switch */}
             <div className="text-center pt-2 text-xs font-semibold text-slate-500">
               Don't have an account?{' '}
-              <button onClick={() => navigate('/')} className="text-blue-600 font-bold hover:underline cursor-pointer">
+              <button onClick={() => navigate('/register')} className="text-blue-600 font-bold hover:underline cursor-pointer">
                 Create account
               </button>
             </div>
