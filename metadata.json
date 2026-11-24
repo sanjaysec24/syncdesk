@@ -1,0 +1,6 @@
+{
+  "name": "Sync Desk",
+  "description": "Campus Timetable Management & Live Availability Platform for Saveetha Engineering College and AICTE Idea Lab",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
