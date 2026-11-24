@@ -8,14 +8,12 @@ import {
   UserCheck,
   Plus,
   Copy,
-  MessageSquare,
   Settings,
   Search,
   ChevronRight,
   ArrowLeft,
   Bell,
   Activity,
-  Check,
   MoreHorizontal,
   Award,
   Star,
@@ -42,7 +40,7 @@ export const AdminDashboardPage: React.FC = () => {
     return matchesSearch;
   });
 
-  const facultyCount = users.filter(u => u.role === 'faculty').length + 4; // matching reference numbers
+  const facultyCount = users.filter(u => u.role === 'faculty').length + 4;
   const studentCount = users.filter(u => u.role === 'student').length + 50;
   const totalMembers = 70;
 
@@ -63,10 +61,10 @@ export const AdminDashboardPage: React.FC = () => {
     <div className="min-h-screen bg-[#F6F5FB] font-['Plus_Jakarta_Sans',sans-serif] text-slate-800 pb-12">
       
       {/* =========================================
-          TOP NAVIGATION BAR
+          1. MAIN HEADER (74px height, image-only logos)
          ========================================= */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-2xs">
-        <div className="flex items-center gap-4">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-[74px] flex items-center justify-between shadow-2xs">
+        <div className="flex items-center">
           <InstitutionalLogos compact />
         </div>
 
@@ -80,7 +78,7 @@ export const AdminDashboardPage: React.FC = () => {
           {/* Notification bell */}
           <button
             onClick={() => navigate('/notifications')}
-            className="relative p-2.5 rounded-full bg-slate-100 hover:bg-slate-200/70 text-slate-600 transition-colors"
+            className="relative p-2.5 rounded-full bg-slate-100 hover:bg-slate-200/70 text-slate-600 transition-colors cursor-pointer"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500"></span>
@@ -99,11 +97,13 @@ export const AdminDashboardPage: React.FC = () => {
       </header>
 
       {/* =========================================
-          MAIN DASHBOARD CONTAINER
+          MAIN CONTAINER (max-w-[1600px], 18-24px padding)
          ========================================= */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 space-y-6">
 
-        {/* Header Action Bar */}
+        {/* =========================================
+            2. DASHBOARD TITLE SECTION
+           ========================================= */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <button
@@ -143,265 +143,263 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* =========================================
-            THREE-COLUMN GRID LAYOUT
+            3. EXACT THREE-COLUMN GRID LAYOUT
            ========================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div 
+          className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start"
+          style={{ gridTemplateColumns: 'minmax(240px, 0.58fr) minmax(500px, 1.5fr) minmax(340px, 1fr)' }}
+        >
           
           {/* -----------------------------------------
-              LEFT SIDEBAR: VIEWS & ORGANIZATION (Col 3)
+              LEFT COLUMN — VIEWS & ORGANIZATION (Sidebar Card)
              ----------------------------------------- */}
-          <div className="lg:col-span-3 space-y-6">
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-2xs space-y-6">
-              
-              {/* VIEWS SECTION */}
-              <div className="space-y-2">
-                <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
-                  VIEWS
-                </span>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => setActiveView('all')}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                      activeView === 'all' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Users className="w-4 h-4" />
-                      <span>All Members</span>
-                    </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
-                      {totalMembers}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveView('faculty')}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                      activeView === 'faculty' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <UserCheck className="w-4 h-4" />
-                      <span>Faculty</span>
-                    </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'faculty' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
-                      {facultyCount}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveView('students')}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                      activeView === 'students' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <GraduationCap className="w-4 h-4" />
-                      <span>Students</span>
-                    </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'students' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
-                      {studentCount}
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              {/* GROUPS SECTION */}
-              <div className="space-y-2 pt-3 border-t border-slate-100">
-                <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
-                  GROUPS
-                </span>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => navigate('/groups')}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>New group</span>
-                  </button>
-
-                  <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <div className="flex items-center gap-2.5">
-                      <Award className="w-4 h-4 text-amber-500" />
-                      <span>Coordinators</span>
-                    </div>
-                    <span className="text-slate-400 text-xs">5</span>
-                  </div>
-
-                  <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <div className="flex items-center gap-2.5">
-                      <Star className="w-4 h-4 text-purple-500" />
-                      <span>Ambassadors</span>
-                    </div>
-                    <span className="text-slate-400 text-xs">8</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* TEAMS SECTION */}
-              <div className="space-y-2 pt-3 border-t border-slate-100">
-                <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
-                  TEAMS
-                </span>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => navigate('/groups')}
-                    className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>New team</span>
-                  </button>
-
-                  <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <div className="flex items-center gap-2.5">
-                      <Code className="w-4 h-4 text-emerald-500" />
-                      <span>UI/UX Team</span>
-                    </div>
-                    <span className="text-slate-400 text-xs">12</span>
-                  </div>
-
-                  <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <div className="flex items-center gap-2.5">
-                      <Calendar className="w-4 h-4 text-pink-500" />
-                      <span>Event Team</span>
-                    </div>
-                    <span className="text-slate-400 text-xs">15</span>
-                  </div>
-
-                  <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
-                    <div className="flex items-center gap-2.5">
-                      <Code className="w-4 h-4 text-blue-500" />
-                      <span>Dev Team</span>
-                    </div>
-                    <span className="text-slate-400 text-xs">18</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* -----------------------------------------
-              CENTER: LIVE AVAILABILITY & TIMETABLE (Col 6)
-             ----------------------------------------- */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-2xs space-y-6">
-              
-              {/* Header row */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                    <Activity className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="font-black text-slate-900 text-sm">LIVE AVAILABILITY</h3>
-                    <p className="text-xs text-slate-500 font-semibold">All Members • {totalMembers}</p>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs font-bold">
-                  <span>📅 Monday, 23 Nov 2026 • 03:27 PM</span>
-                </div>
-              </div>
-
-              {/* Summary Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Free Card */}
-                <div className="bg-[#EBF7EE] rounded-2xl p-4 border border-emerald-200/60 flex items-center justify-between">
-                  <div>
-                    <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider">Free</span>
-                    <h2 className="text-3xl font-black text-[#16803D] mt-0.5">42</h2>
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-white/80 text-[#16803D] flex items-center justify-center shadow-xs">
-                    <Users className="w-6 h-6" />
-                  </div>
-                </div>
-
-                {/* Busy Card */}
-                <div className="bg-[#FDF2F2] rounded-2xl p-4 border border-rose-200/60 flex items-center justify-between">
-                  <div>
-                    <span className="text-xs font-extrabold text-rose-800 uppercase tracking-wider">Busy</span>
-                    <h2 className="text-3xl font-black text-[#D92D35] mt-0.5">28</h2>
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-white/80 text-[#D92D35] flex items-center justify-center shadow-xs">
-                    <Users className="w-6 h-6" />
-                  </div>
-                </div>
-
-                {/* Current Period Card */}
-                <div className="bg-[#FEF9EC] rounded-2xl p-4 border border-amber-200/80 flex items-center justify-between sm:col-span-1">
-                  <div>
-                    <span className="text-xs font-extrabold text-amber-800 uppercase tracking-wider">Current Period</span>
-                    <h4 className="text-sm font-black text-amber-900 mt-1">P3 • 11:30 AM – 12:15 PM</h4>
-                  </div>
-                </div>
-              </div>
-
-              {/* Availability Timetable Matrix matching reference image */}
-              <div className="overflow-x-auto pt-2">
-                <table className="w-full text-center border-collapse text-xs">
-                  <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200/80 font-extrabold text-slate-500 uppercase tracking-wider text-[11px]">
-                      <th className="py-3 px-2 text-left">Period</th>
-                      <th className="py-3 px-2">Mon</th>
-                      <th className="py-3 px-2">Tue</th>
-                      <th className="py-3 px-2">Wed</th>
-                      <th className="py-3 px-2">Thu</th>
-                      <th className="py-3 px-2">Fri</th>
-                      <th className="py-3 px-2">Sat</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {[
-                      { period: 'P1', time: '08:00 – 09:30', free: 46, busy: 24 },
-                      { period: 'P2', time: '09:45 – 11:15', free: 45, busy: 25 },
-                      { period: 'P3', time: '11:30 – 12:15', free: 42, busy: 28, isCurrent: true },
-                      { period: 'P4', time: '12:15 – 12:59', free: 41, busy: 29 },
-                      { period: 'P5', time: '01:15 – 02:45', free: 44, busy: 26 },
-                      { period: 'P6', time: '03:00 – 04:30', free: 48, busy: 22 }
-                    ].map(row => (
-                      <tr key={row.period} className={`hover:bg-slate-50/50 transition-colors ${row.isCurrent ? 'bg-amber-50/40 border-l-4 border-amber-500' : ''}`}>
-                        <td className="py-3 px-2 text-left font-bold text-slate-900 bg-slate-50/30">
-                          <div>{row.period}</div>
-                          <div className="text-[10px] text-slate-400 font-normal">{row.time}</div>
-                        </td>
-                        {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, idx) => {
-                          // slight variation for realism
-                          const offset = (idx * 2) - 3;
-                          const f = row.free + (offset % 3);
-                          const b = totalMembers - f;
-
-                          return (
-                            <td key={day} className="py-3 px-1 text-[11px]">
-                              <div className="flex flex-col items-center justify-center gap-0.5 bg-slate-50/60 p-1.5 rounded-xl border border-slate-100">
-                                <div className="flex items-center gap-1 text-[#16803D] font-bold">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#16803D]"></span>
-                                  <span>Free {f}</span>
-                                </div>
-                                <div className="flex items-center gap-1 text-[#D92D35] font-bold">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#D92D35]"></span>
-                                  <span>Busy {b}</span>
-                                </div>
-                              </div>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          </div>
-
-          {/* -----------------------------------------
-              RIGHT PANEL: MEMBERS, CHAT, SETTINGS & GROUPS (Col 3)
-             ----------------------------------------- */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="bg-white rounded-[22px] p-5 border border-slate-200/80 shadow-2xs space-y-6">
             
-            {/* Right Card with Tabs */}
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-2xs space-y-4">
+            {/* VIEWS SECTION */}
+            <div className="space-y-2">
+              <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
+                VIEWS
+              </span>
+              <div className="space-y-1">
+                <button
+                  onClick={() => setActiveView('all')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                    activeView === 'all' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Users className="w-4 h-4" />
+                    <span>All Members</span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'all' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
+                    {totalMembers}
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => setActiveView('faculty')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                    activeView === 'faculty' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <UserCheck className="w-4 h-4" />
+                    <span>Faculty</span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'faculty' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
+                    {facultyCount}
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => setActiveView('students')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                    activeView === 'students' ? 'bg-[#EBF2FF] text-[#2166E8]' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <GraduationCap className="w-4 h-4" />
+                    <span>Students</span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] ${activeView === 'students' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600'}`}>
+                    {studentCount}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* GROUPS SECTION */}
+            <div className="space-y-2 pt-3 border-t border-slate-100">
+              <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
+                GROUPS
+              </span>
+              <div className="space-y-1">
+                <button
+                  onClick={() => navigate('/groups')}
+                  className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>New group</span>
+                </button>
+
+                <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <Award className="w-4 h-4 text-amber-500" />
+                    <span>Coordinators</span>
+                  </div>
+                  <span className="text-slate-400 text-xs">5</span>
+                </div>
+
+                <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <Star className="w-4 h-4 text-purple-500" />
+                    <span>Ambassadors</span>
+                  </div>
+                  <span className="text-slate-400 text-xs">8</span>
+                </div>
+              </div>
+            </div>
+
+            {/* TEAMS SECTION */}
+            <div className="space-y-2 pt-3 border-t border-slate-100">
+              <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider px-3">
+                TEAMS
+              </span>
+              <div className="space-y-1">
+                <button
+                  onClick={() => navigate('/groups')}
+                  className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-2xl text-xs font-bold text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>New team</span>
+                </button>
+
+                <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <Code className="w-4 h-4 text-emerald-500" />
+                    <span>UI/UX Team</span>
+                  </div>
+                  <span className="text-slate-400 text-xs">12</span>
+                </div>
+
+                <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <Calendar className="w-4 h-4 text-pink-500" />
+                    <span>Event Team</span>
+                  </div>
+                  <span className="text-slate-400 text-xs">15</span>
+                </div>
+
+                <div className="flex items-center justify-between px-3.5 py-2 text-xs font-semibold text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <Code className="w-4 h-4 text-blue-500" />
+                    <span>Dev Team</span>
+                  </div>
+                  <span className="text-slate-400 text-xs">18</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* -----------------------------------------
+              CENTER COLUMN — LIVE AVAILABILITY & TIMETABLE MATRIX
+             ----------------------------------------- */}
+          <div className="bg-white rounded-[22px] p-6 border border-slate-200/80 shadow-2xs space-y-6">
+            
+            {/* Header row */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                  <Activity className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-black text-slate-900 text-sm">LIVE AVAILABILITY</h3>
+                  <p className="text-xs text-slate-500 font-semibold">All Members • {totalMembers}</p>
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs font-bold">
+                <span>📅 Monday, 23 Nov 2026 • 03:27 PM</span>
+              </div>
+            </div>
+
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Free Card */}
+              <div className="bg-[#EBF7EE] rounded-2xl p-4 border border-emerald-200/60 flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider">Free</span>
+                  <h2 className="text-3xl font-black text-[#16803D] mt-0.5">42</h2>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-white/80 text-[#16803D] flex items-center justify-center shadow-xs">
+                  <Users className="w-6 h-6" />
+                </div>
+              </div>
+
+              {/* Busy Card */}
+              <div className="bg-[#FDF2F2] rounded-2xl p-4 border border-rose-200/60 flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-extrabold text-rose-800 uppercase tracking-wider">Busy</span>
+                  <h2 className="text-3xl font-black text-[#D92D35] mt-0.5">28</h2>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-white/80 text-[#D92D35] flex items-center justify-center shadow-xs">
+                  <Users className="w-6 h-6" />
+                </div>
+              </div>
+
+              {/* Current Period Card */}
+              <div className="bg-[#FEF9EC] rounded-2xl p-4 border border-amber-200/80 flex items-center justify-between sm:col-span-1">
+                <div>
+                  <span className="text-xs font-extrabold text-amber-800 uppercase tracking-wider">Current Period</span>
+                  <h4 className="text-sm font-black text-amber-900 mt-1">P3 • 11:30 AM – 12:15 PM</h4>
+                </div>
+              </div>
+            </div>
+
+            {/* Availability Timetable Matrix matching reference image */}
+            <div className="overflow-x-auto pt-2">
+              <table className="w-full text-center border-collapse text-xs">
+                <thead>
+                  <tr className="bg-slate-50/80 border-b border-slate-200/80 font-extrabold text-slate-500 uppercase tracking-wider text-[11px]">
+                    <th className="py-3 px-2 text-left">Period</th>
+                    <th className="py-3 px-2">Mon</th>
+                    <th className="py-3 px-2">Tue</th>
+                    <th className="py-3 px-2">Wed</th>
+                    <th className="py-3 px-2">Thu</th>
+                    <th className="py-3 px-2">Fri</th>
+                    <th className="py-3 px-2">Sat</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {[
+                    { period: 'P1', time: '08:00 – 09:30', free: 46, busy: 24 },
+                    { period: 'P2', time: '09:45 – 11:15', free: 45, busy: 25 },
+                    { period: 'P3', time: '11:30 – 12:15', free: 42, busy: 28, isCurrent: true },
+                    { period: 'P4', time: '12:15 – 12:59', free: 41, busy: 29 },
+                    { period: 'P5', time: '01:15 – 02:45', free: 44, busy: 26 },
+                    { period: 'P6', time: '03:00 – 04:30', free: 48, busy: 22 }
+                  ].map(row => (
+                    <tr key={row.period} className={`hover:bg-slate-50/50 transition-colors ${row.isCurrent ? 'bg-amber-50/40 border-l-4 border-amber-500' : ''}`}>
+                      <td className="py-3 px-2 text-left font-bold text-slate-900 bg-slate-50/30">
+                        <div>{row.period}</div>
+                        <div className="text-[10px] text-slate-400 font-normal">{row.time}</div>
+                      </td>
+                      {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, idx) => {
+                        const offset = (idx * 2) - 3;
+                        const f = row.free + (offset % 3);
+                        const b = totalMembers - f;
+
+                        return (
+                          <td key={day} className="py-3 px-1 text-[11px]">
+                            <div className="flex flex-col items-center justify-center gap-0.5 bg-slate-50/60 p-1.5 rounded-xl border border-slate-100">
+                              <div className="flex items-center gap-1 text-[#16803D] font-bold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#16803D]"></span>
+                                <span>Free {f}</span>
+                              </div>
+                              <div className="flex items-center gap-1 text-[#D92D35] font-bold">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#D92D35]"></span>
+                                <span>Busy {b}</span>
+                              </div>
+                            </div>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          {/* -----------------------------------------
+              RIGHT COLUMN — TWO SEPARATE VERTICALLY STACKED CARDS
+             ----------------------------------------- */}
+          <div className="space-y-4">
+            
+            {/* FIRST CARD: MEMBERS */}
+            <div className="bg-white rounded-[22px] p-5 border border-slate-200/80 shadow-2xs space-y-4">
               
               {/* Tabs */}
               <div className="flex bg-slate-100 p-1 rounded-2xl text-xs font-bold">
@@ -421,7 +419,7 @@ export const AdminDashboardPage: React.FC = () => {
                   onClick={() => setRightTab('settings')}
                   className={`flex-1 py-2 rounded-xl transition-all cursor-pointer ${rightTab === 'settings' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
                 >
-                  Settings
+                  Desk settings
                 </button>
               </div>
 
@@ -499,7 +497,7 @@ export const AdminDashboardPage: React.FC = () => {
                       placeholder="Type message..."
                       className="flex-1 bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs"
                     />
-                    <button type="submit" className="px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold">Send</button>
+                    <button type="submit" className="px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold cursor-pointer">Send</button>
                   </form>
                 </div>
               )}
@@ -508,14 +506,14 @@ export const AdminDashboardPage: React.FC = () => {
               {rightTab === 'settings' && (
                 <div className="space-y-3 text-xs text-slate-600">
                   <div className="p-3 bg-slate-50 rounded-xl font-bold text-slate-900">Workspace Management</div>
-                  <button onClick={() => navigate('/settings')} className="w-full py-2 px-3 bg-blue-50 text-blue-700 font-bold rounded-xl">Desk Settings</button>
+                  <button onClick={() => navigate('/settings')} className="w-full py-2 px-3 bg-blue-50 text-blue-700 font-bold rounded-xl cursor-pointer">Desk Settings</button>
                 </div>
               )}
 
             </div>
 
-            {/* Groups & Teams Card matching reference */}
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-2xs space-y-4">
+            {/* SECOND CARD: GROUPS & TEAMS */}
+            <div className="bg-white rounded-[22px] p-5 border border-slate-200/80 shadow-2xs space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="font-extrabold text-slate-900 text-sm">Groups & Teams</h4>
                 <button
@@ -564,7 +562,7 @@ export const AdminDashboardPage: React.FC = () => {
 
         </div>
 
-      </main>
+      </div>
 
     </div>
   );
