@@ -51,8 +51,8 @@ export const ProfileSetupPage: React.FC = () => {
         phone,
         profileCompleted: true
       });
-      // Navigate to workspace or join desk
-      useNavigateInstance('/workspace');
+      // Navigate to Join a Desk page (Step 3 of 4)
+      useNavigateInstance('/join-desk');
     }, 700);
   };
 

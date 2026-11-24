@@ -11,6 +11,8 @@ import { WelcomePage } from './pages/WelcomePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ProfileSetupPage } from './pages/ProfileSetupPage';
+import { JoinDeskPage } from './pages/JoinDeskPage';
+import { SubmitTimetablePage } from './pages/SubmitTimetablePage';
 import { TimetableSubmissionPage } from './pages/TimetableSubmissionPage';
 import { WorkspacePage } from './pages/WorkspacePage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -33,7 +35,8 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile/complete" element={<ProfileSetupPage />} />
-          <Route path="/timetable/submit" element={<TimetableSubmissionPage />} />
+          <Route path="/join-desk" element={<JoinDeskPage />} />
+          <Route path="/timetable/submit" element={<SubmitTimetablePage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/members" element={<MembersPage />} />
