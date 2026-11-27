@@ -16,6 +16,9 @@ export interface User {
   skills?: string[];
   timetableSubmitted: boolean;
   profileCompleted: boolean;
+  timetableCompleted?: boolean;
+  timetableStatus?: 'DRAFT' | 'FINALIZED';
+  deskJoined?: boolean;
 }
 
 export type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';

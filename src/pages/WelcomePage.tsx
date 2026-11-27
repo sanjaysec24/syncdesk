@@ -1,140 +1,86 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useApp } from '../context/AppContext';
 import { InstitutionalLogos } from '../components/branding/InstitutionalLogos';
-import { CalendarIllustration } from '../components/welcome/CalendarIllustration';
-import { RoleSelection } from '../components/welcome/RoleSelection';
 import { BackgroundWaves } from '../components/welcome/BackgroundWaves';
+import { RoleCard } from '../components/welcome/RoleCard';
 import { LogIn } from 'lucide-react';
 
 export const WelcomePage: React.FC = () => {
+  const { switchRole } = useApp();
   const navigate = useNavigate();
 
+  const handleRoleSelect = (role: 'admin' | 'student' | 'faculty') => {
+    switchRole(role);
+    navigate('/login');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F3EEFF] via-[#FFFFFF] to-[#EEF2FF] flex flex-col relative overflow-x-hidden font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen bg-gradient-to-br from-[#F3EEFF] via-[#FFFFFF] to-[#EEF2FF] flex flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-x-hidden font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Background Waves */}
       <BackgroundWaves />
 
-      {/* =========================================
-          DESKTOP & TABLET LAYOUT (hidden on < 1024px)
-         ========================================= */}
-      <div className="hidden lg:flex flex-col min-h-screen max-w-7xl w-full mx-auto p-6 xl:p-10 justify-between">
+      {/* Outer Container (max-width ~1120px) */}
+      <div className="max-w-[1120px] w-full mx-auto space-y-6 my-auto">
         
-        {/* Desktop Header */}
-        <header className="w-full bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 px-6 py-4 flex items-center justify-between">
-          <InstitutionalLogos />
+        {/* 1. Compact Institutional Header */}
+        <header className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 px-6 py-3.5 flex items-center justify-between">
+          <InstitutionalLogos compact />
 
           <button
             onClick={() => navigate('/login')}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white hover:bg-slate-50 border border-blue-200 text-blue-600 font-bold text-sm shadow-xs transition-all hover:shadow-md cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-slate-50 border border-blue-200 text-blue-600 font-bold text-xs sm:text-sm shadow-xs transition-all hover:shadow-md cursor-pointer shrink-0"
           >
             <LogIn className="w-4 h-4" />
             <span>Sign In</span>
           </button>
         </header>
 
-        {/* Desktop Hero & Role Selection Content */}
-        <main className="my-8 space-y-10">
-          {/* Hero Section */}
-          <div className="bg-white/80 backdrop-blur-md rounded-[36px] shadow-xl border border-white/90 p-10 grid grid-cols-12 gap-8 items-center">
-            <div className="col-span-7 space-y-4">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 font-extrabold text-xs tracking-wider uppercase border border-blue-100 shadow-2xs">
-                WELCOME TO
-              </span>
-              <h1 className="text-5xl xl:text-6xl font-black tracking-tight text-[#14264B]">
-                Sync <span className="text-[#2563EB]">Desk</span>
-              </h1>
-              <p className="text-base text-slate-600 font-medium leading-relaxed max-w-xl">
-                Timetable Management • Live Availability • Team Collaboration
-              </p>
-            </div>
+        {/* 2. Welcome Hero Card - Entire Card is Only main-wel.png */}
+        <section className="w-full h-[180px] sm:h-[220px] overflow-hidden rounded-[24px] shadow-lg shadow-indigo-950/10 border border-slate-100 bg-white p-0 m-0">
+          <img
+            src="/main-wel.png"
+            alt="Sync Desk Welcome Hero"
+            className="w-full h-full block object-cover object-center m-0 p-0"
+          />
+        </section>
 
-            <div className="col-span-5 flex justify-center">
-              <CalendarIllustration />
-            </div>
+        {/* 3. Role Selection Section */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between px-2">
+            <h2 className="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">
+              Choose how you're joining
+            </h2>
           </div>
 
-          {/* Role Selection Section */}
-          <div className="bg-white/80 backdrop-blur-md rounded-[36px] shadow-xl border border-white/90 p-8">
-            <RoleSelection />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <RoleCard
+              role="admin"
+              title="Admin"
+              description="Create and manage desks, teams and timetables."
+              onClick={() => handleRoleSelect('admin')}
+            />
+            <RoleCard
+              role="student"
+              title="Student"
+              description="Join a desk and submit your timetable."
+              onClick={() => handleRoleSelect('student')}
+            />
+            <RoleCard
+              role="faculty"
+              title="Faculty"
+              description="Join a desk and submit your timetable."
+              onClick={() => handleRoleSelect('faculty')}
+            />
           </div>
-        </main>
-
-        {/* Desktop Footer */}
-        <footer className="text-center text-xs text-slate-500 py-4">
-          Saveetha Engineering College • AICTE Idea Lab • Sync Desk Platform
-        </footer>
-      </div>
-
-      {/* =========================================
-          MOBILE & TABLET PORTRAIT LAYOUT (visible on < 1024px)
-         ========================================= */}
-      <div className="flex lg:hidden flex-col min-h-screen w-full p-4 sm:p-6 justify-between max-w-lg mx-auto">
-        
-        {/* Mobile Header */}
-        <header className="w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/mainlogo.png" alt="Sync Desk" className="h-7 w-auto object-contain" />
-            <span className="font-black text-slate-900 text-base">
-              Sync <span className="text-blue-600">Desk</span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <img src="/sec.png" alt="SEC" className="h-6 w-auto object-contain" />
-            <span className="text-slate-300">|</span>
-            <img src="/idea.png" alt="Idea Lab" className="h-6 w-auto object-contain" />
-          </div>
-
-          <button
-            onClick={() => navigate('/login')}
-            className="p-2 rounded-xl bg-blue-50 text-blue-600 font-bold text-xs flex items-center gap-1 shadow-2xs"
-          >
-            <LogIn className="w-3.5 h-3.5" />
-            <span>Sign In</span>
-          </button>
-        </header>
-
-        {/* Mobile Main Content */}
-        <main className="my-6 space-y-6 flex-1 flex flex-col justify-center">
-          
-          {/* Mobile Hero & Branding */}
-          <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 text-center space-y-4">
-            <div className="flex justify-center items-center gap-3 py-1">
-              <img src="/sec.png" alt="SEC" className="h-8 w-auto object-contain" />
-              <div className="w-[1px] h-6 bg-slate-200"></div>
-              <img src="/idea.png" alt="Idea Lab" className="h-8 w-auto object-contain" />
-            </div>
-
-            <div className="space-y-2">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-extrabold text-[10px] uppercase tracking-wider">
-                WELCOME TO
-              </span>
-              <h1 className="text-3xl sm:text-4xl font-black text-[#14264B]">
-                Sync <span className="text-[#2563EB]">Desk</span>
-              </h1>
-              <p className="text-xs text-slate-600 font-medium px-2">
-                Timetable Management • Live Availability • Team Collaboration
-              </p>
-            </div>
-
-            <div className="py-2 flex justify-center">
-              <CalendarIllustration compact />
-            </div>
-          </div>
-
-          {/* Mobile Role Selection */}
-          <div className="bg-white rounded-3xl shadow-lg border border-slate-100 p-6">
-            <RoleSelection compact />
-          </div>
-        </main>
-
-        {/* Mobile Footer */}
-        <footer className="text-center text-[11px] text-slate-500 pb-2">
-          Saveetha Engineering College • AICTE Idea Lab
-        </footer>
+        </section>
 
       </div>
 
+      {/* 4. Minimal Footer */}
+      <footer className="max-w-[1120px] w-full mx-auto text-center text-xs text-slate-500 py-4 mt-auto">
+        Saveetha Engineering College • AICTE Idea Lab • Sync Desk Platform
+      </footer>
     </div>
   );
 };
